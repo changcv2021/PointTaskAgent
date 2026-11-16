@@ -1,0 +1,59 @@
+{
+  "index": 64,
+  "scene": "scene-0906",
+  "sample_token": "fe2427d40c2741a5a41207cd031c27ba",
+  "task": "detection",
+  "episode": "D-9",
+  "status": "COMPLETE",
+  "selected": "TRACK_TO_DET:15",
+  "code_attempts": 5,
+  "model_calls": 6,
+  "summary": "Select TRACK_TO_DET:15 based on the shared E8 upper/lower-face comparison: six planar upper truck returns are 0.024–0.025 m below its top, while four coherent low returns are within its bottom boundary. KEEP and TRACK_TO_DET:14 exclude those low returns and place their tops about 0.408 and 0.334 m above the upper patch. E5 shows clearance above nearby actual ground; distant ground-plane extrapolation cannot establish penetration here. SEG_TO_DET:2 moves the measured side about 0.75 m behind its face and excludes upper support. Counterevidence: KEEP fits the visible side more closely than the selected candidate, and the upper patch is incomplete. These are reused current-scan measurements, not independent validation; semantics, containment and the unconfirmed track proposal alone were insufficient.",
+  "episode_dir": "${EXPERIMENT_ROOT}/episodes/fe2427d40c2741a5a41207cd031c27ba/D-9",
+  "gt_used_only_offline": true,
+  "baseline_objective": [
+    -372,
+    -12.635958470704058
+  ],
+  "selected_objective": [
+    -372,
+    -12.5078329258371
+  ],
+  "objective_definition": "Lexicographic: sum over 0.5/1/2/4m of 2*TP-Npred, then negative summed matched XY distance. Not AP/NDS.",
+  "delta_primary": 0,
+  "matched_xy_error_reduction_m": 0.1281255448669576,
+  "effect": "beneficial",
+  "oracle_qualified": true,
+  "qualified_actions": [
+    "TRACK_TO_DET:15"
+  ],
+  "candidate_objectives": {
+    "KEEP": [
+      -372,
+      -12.635958470704058
+    ],
+    "TRACK_TO_DET:14": [
+      -372,
+      -12.69966623195609
+    ],
+    "TRACK_TO_DET:15": [
+      -372,
+      -12.5078329258371
+    ],
+    "SEG_TO_DET:2": [
+      -374,
+      -13.942475281452797
+    ]
+  },
+  "code_or_format_errors": 0,
+  "successful_code_steps": 4,
+  "diagnostic_questions": [
+    "Are the large downward shifts compatible with measured ground and coherent truck returns, or are they following low visible surfaces rather than the full truck?",
+    "Does a directly observed sensor-facing side support the horizontal shifts, and do separate road/sidewalk measurements substantiate the apparent vertical penetration?",
+    "Do nearby actual ground returns—not extrapolated planes—constrain the lower face at the excluded low truck returns?",
+    "Is the coherent upper patch an observed top surface that distinguishes the substantial downward correction from KEEP and the small correction?",
+    "The executed boundary comparisons support `TRACK_TO_DET:15` as a vertical correction, rather than alignment to a low-point centroid."
+  ],
+  "model_requested_views": 4,
+  "finalization": "PYTHON_RETURN_DECISION"
+}

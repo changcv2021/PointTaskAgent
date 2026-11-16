@@ -1,0 +1,176 @@
+{
+  "protocol_id": "pointtaskagent-nuscenes-val-quartz-v1",
+  "scope": "Full official nuScenes val baselines, E1 error complementarity and four independent E2 single-step executable Oracle branches",
+  "dataset_version": "v1.0-trainval",
+  "split": "val",
+  "expected_scenes": 150,
+  "models": {
+    "detection": {
+      "name": "LION-Mamba",
+      "commit": "f7cbdf97e805de3d6beff5f1995e45926680ad4f",
+      "checkpoint_sha256": "0c03eeb2725e3e77203df6c11819981837c02179fdb8b56c40f17f14976a5634",
+      "sweeps": 10,
+      "strict_load": true
+    },
+    "segmentation": {
+      "name": "LitePT-S",
+      "commit": "436d04801c8151faebe66a1b2d368a9711e7e6aa",
+      "checkpoint_sha256": "95f151f6edcfbf315cd06df6afd261f2a2fde300d3c693dd26b1305d642ecc30",
+      "tta": "Unmodified official small-v1m1 test transforms: initial 0.025m voxelization, 0.05m fragment voxelization, five scales and their flips",
+      "probabilities": "Float32 softmax votes averaged per point, restored to original order; argmax must equal native vote argmax",
+      "strict_load": true
+    },
+    "tracking": {
+      "name": "MCTrack",
+      "commit": "a648ee2763ea351a77ddb5232ca00d848d0e46c9",
+      "mode": "ONLINE",
+      "thresholds": "Unmodified upstream CenterPoint online thresholds, applied to LION-Mamba",
+      "history": "Capture once after native predict and before native association/update; reset at scene boundaries"
+    }
+  },
+  "seed": "Per sample: first 32 bits of SHA256(pointtaskagent-20261029- + sample_token); fixed independently of sharding and restart",
+  "coordinate_contract": "Raw points LiDAR xyz, native LION lwh+yaw, nuScenes global wlh and wxyz quaternion; joins by scene/sample/LIDAR_TOP token and timestamp",
+  "inference_ground_truth": "No annotation boxes or semantic labels are passed into inference model inputs or candidate generators",
+  "e1": {
+    "matching": "Score-descending, same-class one-to-one nearest-center matching at 2m, using official detection filtering. This analysis operating point is distinct from official multi-threshold AP.",
+    "detection_errors": "For unmatched GT: classification error if nearest differently classified unmatched prediction is within 2m; otherwise localization error if nearest same-class unmatched prediction is within 4m; otherwise miss. Extra predictions counted separately.",
+    "seg_to_det": "For each detection GT error, >=5 in-box GT-class points, >=50% correctly segmented, and >=50% GT-class points supported by one predicted semantic cluster of that class. Whole-frame clusters generated without GT.",
+    "det_to_seg": "All non-ignore wrong points; also report 10 mapped object classes separately. Support requires correct-class 2m-matched detection containing the wrong point. Instance support means at least half its wrong points are supported.",
+    "track_to_det": "Seven trackable classes; a same-class pre-update historical box within 2m is support. Report first-visible/cold-start instances and unavailable histories separately.",
+    "det_to_track": "Scene-local class-consistent 2m matching; count missed output, ID switch and incorrect native association separately. Evidence requires current correct detection and a feasible same-class historical association within a fixed 4m gate, not merely presence of any box.",
+    "distance_bins_m": [
+      0,
+      20,
+      40,
+      1000000
+    ],
+    "point_count_bins": [
+      0,
+      5,
+      20,
+      1000000000
+    ],
+    "confidence_intervals": "2000 scene bootstrap resamples, seed 20261029; never treat frames of one scene as independent samples"
+  },
+  "candidate_rules": {
+    "all": "Always include no-op; generate independently from full observable inputs; freeze serialized candidate artifacts before GT scoring. Deterministic order and budgets. Preserve failed and zero-gain attempts.",
+    "semantic_clusters": {
+      "min_confidence": 0.5,
+      "eps_m": 0.75,
+      "min_points": 5,
+      "max_clusters_per_frame": 64,
+      "algorithm": "DBSCAN on XYZ separately for each mapped object class; sort by descending point count then centroid"
+    },
+    "seg_to_det": {
+      "max_candidates_per_frame": 64,
+      "geometry": "XY PCA orientation; 2nd/98th percentile extents plus 0.2m; clamp dimensions to [0.5,2] times fixed class dimensions; reject oversized clusters",
+      "association_gate_m": 2.0,
+      "new_score": "0.5 * mean cluster class probability",
+      "replacement_score": "Preserve existing matched detection score and velocity"
+    },
+    "det_to_seg": {
+      "min_detection_score": 0.25,
+      "max_boxes_per_frame": 64,
+      "min_class_probability": 0.1,
+      "max_original_confidence": 0.9,
+      "log_probability_boosts": [
+        0.5,
+        1.0
+      ],
+      "geometry": "Only connected >=5-point components within the predicted box; require at least one seed with current predicted box class; preserve confident background and do not paint the entire box"
+    },
+    "track_to_det": {
+      "max_candidates_per_frame": 64,
+      "max_observation_age_s": 1.0,
+      "min_lidar_points": 5,
+      "box_expansion_m": 0.3,
+      "candidates": "History predicted box plus a bounded geometric center adjustment from current in-box LiDAR points; preserve dimensions/yaw",
+      "max_shift_xy_m": 0.5,
+      "max_shift_z_m": 0.3,
+      "score": "last detection score times exp(-observation age / 1s)",
+      "protocol_label": "History-enhanced: scene-local Kalman state can depend on more than the official 10-sweep detection window; report actual history spans"
+    },
+    "det_to_track": {
+      "association_gate_m": 4.0,
+      "max_alternatives_per_frame": 8,
+      "candidates": "Native association plus deterministic alternative one-to-one assignments obtained from current detection and historical prediction: center-distance Hungarian and single-edge forced assignments, preserving the native update/track lifecycle",
+      "replay": "Oracle chooses one transition per frame; chosen tracker state continues chronologically; no future observations used"
+    },
+    "class_lwh_m": {
+      "car": [
+        4.5,
+        1.8,
+        1.6
+      ],
+      "truck": [
+        7.0,
+        2.5,
+        3.0
+      ],
+      "construction_vehicle": [
+        6.0,
+        2.8,
+        3.0
+      ],
+      "bus": [
+        12.0,
+        2.5,
+        3.2
+      ],
+      "trailer": [
+        12.0,
+        2.5,
+        3.5
+      ],
+      "barrier": [
+        2.0,
+        0.5,
+        1.0
+      ],
+      "motorcycle": [
+        2.0,
+        0.8,
+        1.5
+      ],
+      "bicycle": [
+        1.8,
+        0.6,
+        1.5
+      ],
+      "pedestrian": [
+        0.8,
+        0.7,
+        1.7
+      ],
+      "traffic_cone": [
+        0.5,
+        0.5,
+        0.7
+      ]
+    }
+  },
+  "oracle": {
+    "detection": "Greedy fixed candidate order: accept a candidate only if it lexicographically improves (sum over 0.5/1/2/4m of TP-FP, negative sum matched center distances), with class-consistent one-to-one matching. Each original detection can be modified at most once. No-op wins ties. Official mAP/NDS are computed afterward and may decrease.",
+    "segmentation": "Choose at most one candidate per detector region by increased correct non-ignore point count; evaluate only candidate-changed indices; accept strictly positive changes, no-op wins ties. Resolve overlapping regions in descending detector score order, each point modified at most once. Report full 16-class official mIoU, which need not improve.",
+    "tracking": "Among frozen transition candidates, minimize the sum of wrong identity associations relative to prior matched GT instance identities and ID switches relative to prior GT-instance-to-track matches, then maximize matched outputs, then minimize center distance; no-op wins ties. State updates continue sequentially, and final full-sequence official AMOTA is mandatory.",
+    "branches": [
+      "baseline",
+      "seg_to_det",
+      "det_to_seg",
+      "track_to_det",
+      "det_to_track"
+    ],
+    "no_joint_best_of": true
+  },
+  "metrics": {
+    "detection": "nuScenes-devkit 1.1.11 detection_cvpr_2019 mAP/NDS",
+    "segmentation": "16-class confusion matrix cross-checked against native nuScenes LidarSegEval; official IDs 1..16",
+    "tracking": "nuScenes-devkit 1.1.11 tracking_nips_2019 AMOTA"
+  },
+  "execution": {
+    "cluster": "Quartz",
+    "gpu": "H100 sm90",
+    "validation": "One complete alphabetically first val scene for functional tests, retained in final full val; no metric-driven threshold tuning",
+    "resume": "Atomic per-sample predictions; tracker resumes at complete scene boundaries; manifests and protocol hashes required"
+  }
+}

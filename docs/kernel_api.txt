@@ -1,0 +1,52 @@
+# Kernel API (disagreement verification v2)
+
+All xyz, box centers and camera coordinates are nuScenes GLOBAL metres, Z up.
+Point IDs are the row indices of the CURRENT LiDAR scan. No historical scan points or GT are available.
+Semantic labels are LitePT 0..15 (scene.class_names gives names). Semantic segmentation is not instance segmentation.
+
+- `scene.candidate_ids`: list including `KEEP`. IDs are exact executable source IDs, not C1 aliases.
+- `scene.candidate_table()`: complete metadata list; no candidates hidden. `candidate_id` is always the FULL STRING used by every API and ReturnDecision (e.g. `SEG_TO_DET:4`). `native_candidate_id` is numeric source provenance only; never pass it as an executable ID.
+- `scene.candidate(cid)`: original metadata copy.
+- `scene.box(cid='KEEP')`: Box(id, center[3], size_lwh[3], rotation[3,3], class_name, score, raw). Detection candidates are full boxes retaining D0 attributes. Local = (global-center) @ rotation.
+- `Box.size` is an alias for `size_lwh` (length, width, height); only `Box.raw['size']` retains nuScenes' original width, length, height ordering. `scene.class_names` accepts either integer class IDs or their string forms.
+- `scene.reference_boxes`: list of Box. For segmentation this is the source proposal box, not ground truth or confirmed instance.
+- `scene.detection_boxes`: all frozen current-frame detection Boxes, for investigating nearby objects; no corrected D1 boxes are exposed.
+- Neighbor detection IDs `DET:<index>` can also be passed to `scene.box` and `viz.render(box_ids=...)` for context; they are not selectable correction IDs.
+- `scene.points(bounds=None, point_ids=None)`: PointSet(point_ids, xyz, intensity, semantic_labels, semantic_probs). With BOTH arguments omitted or None, this returns the ENTIRE current scan, not the local crop. bounds is `[min_xyz,max_xyz]` in global coordinates, or a Box. All current-frame points remain accessible. For local observation use `scene.initial_points()`; explicitly request wider bounds when needed. Rendering the entire scan on the CPU can be slow and makes a local target small.
+- `scene.initial_points()`: adaptive real crop with all potential changed points included for segmentation.
+- `pointset[mask_or_indices]`, `.select(mask_or_indices)`: retain stable point IDs.
+- `scene.semantic(point_ids)`: dict labels, probabilities from frozen S0.
+- `scene.semantic_indices_for_detection_class(name)`: list of matching class indices.
+- `scene.patch(cid)`: SemanticPatch(id, point_ids, new_labels, region_point_ids, source_box). point_ids are executable changed points; region_point_ids is the union of cached changed point sets in the original region. This is not the original DBSCAN component membership. Use source box/current points for wider context; never assume the point set is an instance.
+- `scene.labels_for(point_ids,candidate_id='KEEP')`: S0 + candidate preview, without modifying S0.
+- `scene.track_history()`: actual strict-window historical track records, with age_s, score, category, velocity and box [x,y,z,l,w,h,yaw]. Association is unconfirmed. A detection candidate may name its actual generator source_track_id; this is provenance, not confirmed identity. No full historical trajectory is fabricated from a final prior.
+- `geom.to_box_coordinates(points_or_xyz,box)`, `geom.points_in_box(points_or_xyz,box,padding=0)`, `geom.signed_box_distance(...)` (negative inside), `geom.outside_box_distance(...)` (zero inside).
+- `geom.knn(reference,queries=None,k=8)` returns distances, local array indices (convert back to point IDs).
+- `geom.radius_edges(points,radius)` returns local index edge pairs.
+- `geom.connected_components(n_points,edges)` returns count, local component labels.
+- `geom.transform(points,matrix4x4)` returns xyz.
+- `viz.preset_camera(name='main', points=None, box_ids=None, image_size=700)`; names main, complementary, bev. Framing uses D0 + all existing boxes once. Returns Camera.
+- `viz.make_camera(look_at,eye_direction,up=(0,0,1),projection='orthographic',span_m=12.,image_size=700)`: direction points from target toward camera; BEV direction (0,0,1) requires a horizontal up vector. Square 128..1400px, no synthetic geometry.
+- `viz.render(points,camera,box_ids=('KEEP',),color_mode='intensity',labels=None,highlight_ids=None,title='',tracks=None)` returns a View. color_mode intensity or semantic. labels must align with points; use labels_for for candidate previews. tracks may be explicit records from track_history and are labelled unconfirmed priors. Reuse the SAME Camera and point set when comparing candidates. Point coordinates are not changed by visualization.
+- Rendering validates unique original point IDs, unchanged global XYZ/intensity, and original S0 or an existing semantic candidate preview. Analyze transformed coordinates in temporary arrays; obtain `scene.points(point_ids=...)` for rendering. Each candidate has a distinct, episode-stable box color, listed in the rendered legend and `view['boxes']`. Use this actual mapping instead of guessing color names in captions. For overlapping boxes, individual views with the same camera remain available.
+- `show(view,caption='')`: queues actual PNG pixels for the NEXT model request. `viz.load_view(view_id)` retrieves a rendered view. A view not shown has not been seen by the model.
+- `report(name,values,point_ids=None)`: stores real computed evidence and returns E<number>.
+- `ReturnDecision(candidate_id,evidence_ids,summary)`: choose an existing ID or KEEP. Evidence IDs are E<number> and/or V<number>. This terminates the episode. Pending new images must be inspected in a subsequent turn first.
+
+Python state persists in this episode. NumPy is np, scipy is available. Exactly one executable fenced Python cell in the final response (reasoning is stored separately, not executed). Format: Diagnostic Question / Evaluated Candidates / Evidence Sources / Agent Interpretation, then a ```python fenced cell. No need for extra views or fixed step count when evidence is sufficient. The outer runner applies the ORIGINAL selected candidate, never arbitrary edits made to local arrays.
+
+
+## Disagreement-guided program verification
+
+- `scene.sensor_origin`: actual current LiDAR origin in global XYZ metres.
+- `scene.evidence_catalog()`: source IDs `LIDAR_CURRENT`, `SENSOR_POSE`, `D0`, `S0`, `T0`, `CANDIDATES` and their known upstream dependencies.
+- `scene.candidate_provenance(cid)`: generation basis and direct source types for an existing candidate. No exact original generator point membership is available; no holdout/independence claim is warranted from membership guesses.
+- `scene.check_evidence_sources(candidate_ids, source_ids)`: dependency descriptions: reused generator sources, additional source types, shared detector lineage. It does not rate reliability, choose a candidate, or prove independence.
+- `diagnose.compare(question, test, candidate_ids=None, point_ids=None, evidence_sources=(), assumptions=None)`: execute YOUR `test(candidate_id, points)` function for each selected ID. Defaults are all episode candidates and the unchanged initial local point set. The exact same point IDs and callable are supplied to each candidate. Inputs are read-only; use temporary derived arrays for calculations. Function returns any JSON-compatible measurements, not a required score. Results contain `evidence_id`, `results[cid]` with status/result/error, and `source_checks`. No winner/ranking is returned. Each candidate call error is retained, allowing you to repair the program. Same-function invocation cannot prove that arbitrary Python lacks candidate-specific branches or state; the code is saved for inspection.
+- `report(name, values, point_ids=None, evidence_sources=(), candidate_ids=())`: backwards-compatible measurement record with declared source/candidate IDs and source-dependency checks. Point IDs must identify actual current-scan points.
+- API source reads are logged as retrievals. A PointSet exposes both geometry and semantics; retrieving one does not prove both were used. Cached variables and direct private-array reads cannot be fully attributed automatically. Explicitly declare the evidence actually used by your diagnostic and explain its limitations.
+- Rendered views record original point IDs and highlighted IDs in `views/V*.points.npz`, with camera parameters in `views/V*.json`. `highlight_ids` must belong to the supplied PointSet. Track overlays must be unchanged records from `scene.track_history()`. All prior associations remain unconfirmed.
+- Newly measured evidence must be observed in feedback before it can justify ReturnDecision; newly shown images likewise require another observation. The final cell can cite earlier E/V IDs without creating a new measurement.
+- Each code turn has a `diagnostics/step_*.json` record and an episode `diagnostic_trace.json`: question, exact code, actually invoked candidates, execution results, declared/retrieved sources, generated images, and interpretation linked to the next model turn. Missing narrative fields are explicitly recorded rather than fabricated. A generated-but-unshown image is not recorded as visually observed.
+
+Example of API structure only (the Agent must author the actual case-specific measurement): define `def test_candidate(cid, points): ...`; then call `comparison = diagnose.compare(question, test_candidate, candidate_ids=scene.candidate_ids, point_ids=support.point_ids, evidence_sources=[...])`. Inspect the returned results in the next turn, optionally compute diagnostic point IDs and show a real view, then decide. There is no prescribed measurement, score, candidate budget or number of steps.

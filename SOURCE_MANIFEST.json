@@ -1,0 +1,578 @@
+[
+  {
+    "source": "${EXPERIMENT_ROOT}/src/scene_api.py",
+    "source_sha256": "fdc3fc1bd566b3027a0b37e60f3d6394f4525e0b80402ef6490dcd06a8281242",
+    "packaged": "src/scene_api.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/src/diagnostics.py",
+    "source_sha256": "e00b3a67c93c3c9b402372d28ea0fb290476cb79186b4899a04a2c80d7097b38",
+    "packaged": "src/diagnostics.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/src/diagnostic_trace.py",
+    "source_sha256": "62c50b7df129d931a7bc3cc336d81ff1150e99d1ec6e6bfefb89eadb1c96a89d",
+    "packaged": "src/diagnostic_trace.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/src/kernel_worker.py",
+    "source_sha256": "0ee807230a6cd33cef7b7cf75e835a9c2b7abdfa98369bf3c0c4bda492551b80",
+    "packaged": "src/kernel_worker.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/src/prepare_selection.py",
+    "source_sha256": "284c269d976a6ba924f623b8a6274a03bb44bd62072d3187655b78dc60251302",
+    "packaged": "src/prepare_selection.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/src/common_run.py",
+    "source_sha256": "136a87b3d2781edaf7a32687e159af8cc2c2bd181c7c93b88ef3f2bb5c8bfbbc",
+    "packaged": "src/common_run.py",
+    "transformation": "workspace environment variable, API endpoint override, compute guard"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/src/agent.py",
+    "source_sha256": "a6e7228a820cfd0d1e6d7db1058b5cc0e88f9fbe3a6e8c6428867720671fa02b",
+    "packaged": "src/agent.py",
+    "transformation": "package source hashes; offline runtime prerequisite receipt replaces historical preflight receipt paths"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/src/paid_api.py",
+    "source_sha256": "d625376a0a60226f36c2632333f8780d14fd2e242d56991b61875cdbecc5572a",
+    "packaged": "src/paid_api.py",
+    "transformation": "credentials from environment only; configurable HTTPS endpoint; original model/high/budget guards retained"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/src/run_selected.py",
+    "source_sha256": "e102f45e884a8f62a3d5477defb11f0a5b9e65a7033a5ebbc23648993b4dbf84",
+    "packaged": "src/run_selected.py",
+    "transformation": "portable paths and compute guard; evaluation scores unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/src/evaluate_selected.py",
+    "source_sha256": "db7a23f58f3758d9adc9526c1a3bd667397ca9d8a7a8112c91ee56a5e6204e91",
+    "packaged": "src/evaluate_selected.py",
+    "transformation": "portable paths and compute guard; evaluation scores unchanged"
+  },
+  {
+    "source": "${PROJECT_ROOT}/releases/coding_release_20261115_build/templates/kernel.py",
+    "source_sha256": "dce6951c7ad2cef1801cb10816d4c31cda0faa511249bfa51bc581e8b36c9f6a",
+    "packaged": "src/kernel.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${PROJECT_ROOT}/releases/coding_release_20261115_build/templates/init_workspace.py",
+    "source_sha256": "171453f7af354b8a9d73542d69f295abf61935255da3b1316e0bc1889cc17361",
+    "packaged": "scripts/init_workspace.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${PROJECT_ROOT}/releases/coding_release_20261115_build/templates/verify_package.py",
+    "source_sha256": "41f92f704699c5866d90b8bbf380c20eb048e6411484882fd96168e35b3bf764",
+    "packaged": "scripts/verify_package.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${PROJECT_ROOT}/releases/coding_release_20261115_build/templates/check_runtime.py",
+    "source_sha256": "b56b08c411c6a3b6dc5788021bfffef339043a2abc0d554d94771314c7965909",
+    "packaged": "scripts/check_runtime.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/src/visualization.py",
+    "source_sha256": "814af00b2c42d0b266e0dc67392aa564328b600e45b5f23e8ae1448b97b3ef2a",
+    "packaged": "src/visualization.py",
+    "transformation": "local extracted renderer, unchanged visualization API"
+  },
+  {
+    "source": "${HISTORICAL_WORKSPACE}/seeground_preview_v1/scripts/render_sample.py",
+    "source_sha256": "e6ef20719e7917b5bf3775408fad794bd5e823c6856ea80b75e56629b503a4ea",
+    "packaged": "src/renderer.py",
+    "transformation": "only required rendering helpers, no old controller runtime"
+  },
+  {
+    "source": "${HISTORICAL_WORKSPACE}/seeground_review_20261101/SeeGround/inference/projection.py",
+    "source_sha256": "34cdc03df98603a34bc6470d49a7d1ee9d3d5c2e9adea00c23126bb894d65943",
+    "packaged": "src/renderer.py",
+    "transformation": "only create_point_cloud function, Apache-2.0 attribution retained"
+  },
+  {
+    "source": "${HISTORICAL_WORKSPACE}/seeground_review_20261101/SeeGround/LICENSE",
+    "source_sha256": "43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1",
+    "packaged": "third_party/SeeGround-LICENSE",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/src/official_metrics.py",
+    "source_sha256": "523a11a5522e709db74110d6ebd4b7873759ba57d34cbf76e6890509a01fa3b1",
+    "packaged": "src/official_metrics.py",
+    "transformation": "only detection_metric used by current evaluator; obsolete DeepSeek main excluded"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/scripts/geometry.py",
+    "source_sha256": "88d434f1e35ca482040c35442ef44ca3895aa1f9766959bef86eabc4be5f03d5",
+    "packaged": "src/geometry.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/prompts/agent.txt",
+    "source_sha256": "7a8fde2b0da37fa5d4eb18568c541e40821a255389c40af53777d89c64a7de75",
+    "packaged": "prompts/agent.txt",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/prompts/detection.txt",
+    "source_sha256": "dc192c26ae803eacb2a6277340814f25bc09a2ce24ad55296be2930f15068b33",
+    "packaged": "prompts/detection.txt",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/prompts/planner.txt",
+    "source_sha256": "5c790095e0cbb8528af50e07526c62085e1e45d246158ed9255f4fb40333d8ed",
+    "packaged": "prompts/planner.txt",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/prompts/segmentation.txt",
+    "source_sha256": "441ad5a54fa43ee35909c960528f21402b67a9955f62db2e04d04dbd573314a5",
+    "packaged": "prompts/segmentation.txt",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/docs/kernel_api.txt",
+    "source_sha256": "d467d8fb2d0d8e11b8a5d7b8b342c29c64fe89beb0dd81a2f9f156fedbbdc78b",
+    "packaged": "docs/kernel_api.txt",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/configs/class_mappings.json",
+    "source_sha256": "f8c6e7c5ef04b582cf570b7f0aad64f5c053dfa83dfcb923ae7ebde7d56fddab",
+    "packaged": "configs/class_mappings.json",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/configs/lion_nuscenes.yaml",
+    "source_sha256": "bd900f451f21d42d9aed250688a74a534c0447826f088cfb442ca31ce08a03f9",
+    "packaged": "reproduction/backbones/lion_nuscenes.yaml",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/configs/litept_nuscenes.py",
+    "source_sha256": "2722dce4746140291d6b8fa9c9c123f54cb942a6933a17ce82533a8313be717c",
+    "packaged": "reproduction/backbones/litept_nuscenes.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/configs/mctrack_nuscenes.yaml",
+    "source_sha256": "a7c1b36c9c2e3ea6dfb4ffb3f7e1d7acac7720f031a9555d0554932137ac3669",
+    "packaged": "reproduction/backbones/mctrack_nuscenes.yaml",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/configs/lion-requirements.txt",
+    "source_sha256": "0a66d5337cff6e1c8106817614cb05c114c29a09b7038db6e0eb397aa00631bd",
+    "packaged": "reproduction/backbones/lion-requirements.txt",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/configs/litept-requirements.txt",
+    "source_sha256": "62bce26d9ff64ad2afe6d955db936db083358f9a52ea9e91f3099d28cc028f5d",
+    "packaged": "reproduction/backbones/litept-requirements.txt",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/configs/mctrack-requirements.txt",
+    "source_sha256": "bf126377bca526abab6f66fe46f2571884de4ab373abd12f883677148b292a43",
+    "packaged": "reproduction/backbones/mctrack-requirements.txt",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/reports/lion.lock.txt",
+    "source_sha256": "e12f9bba0569e4ad7dad099bfb3c75dc3831bb4061ec24fe2e4d25b10d7b279d",
+    "packaged": "reproduction/backbones/lion.lock.txt",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/reports/lion_source_commit.txt",
+    "source_sha256": "a69b5980100726bd27f7b4f3d594506c0b934e71981ca6290bbc93d9b2104cd8",
+    "packaged": "reproduction/backbones/lion_source_commit.txt",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/reports/litept.lock.txt",
+    "source_sha256": "daf2071c4925b4acb6c27f3fc72481cb55b89a2331c4f84a5ada1eae7a78f29e",
+    "packaged": "reproduction/backbones/litept.lock.txt",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/reports/litept_source_commit.txt",
+    "source_sha256": "ea2d1330e08c496b81d3a5d24c5e57391553e31184324706a436ad1b468640c1",
+    "packaged": "reproduction/backbones/litept_source_commit.txt",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/reports/mctrack.lock.txt",
+    "source_sha256": "4fc5b85d4e5eaaf03cad23a6709e84c7dd6e9c6510db0acb084cd7a26145753e",
+    "packaged": "reproduction/backbones/mctrack.lock.txt",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/reports/mctrack_source_commit.txt",
+    "source_sha256": "eb240e0fc1b2902f0233b8ca0f4aec27330ac99f569c2a12beadb0b8bdea6045",
+    "packaged": "reproduction/backbones/mctrack_source_commit.txt",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/protocol.json",
+    "source_sha256": "080c45bf19d39fe67d3760eccaf2af5e1e83deeab23259782961f1194f0bc9f7",
+    "packaged": "reproduction/protocols/quartz_v1.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/protocol.json",
+    "source_sha256": "61314c15fb2ccfabadf3deec40fba763103582272c17fa0337739d6b3bd76288",
+    "packaged": "reproduction/protocols/quartz_flow_v2.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_nds_v3/protocol.json",
+    "source_sha256": "bd7f7687d3508b37a5ac49f1293f009cd2f35820faf65cb0538b166fad952eae",
+    "packaged": "reproduction/protocols/quartz_nds_v3.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_joint_v4/protocol.json",
+    "source_sha256": "0cae71ad249b8a3155e006b8377270e828c9469aab7c12e9302f709cdb8d14d8",
+    "packaged": "reproduction/protocols/quartz_joint_v4.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/scripts/candidates.py",
+    "source_sha256": "17db854fdb24cf70d6aa1583905f18a3b0b64e63b95126ae15a87bd8f6f87b6e",
+    "packaged": "src/candidate_operators.py",
+    "transformation": "selected numerical primitives only; renamed entry points and explicit inputs replace file-loading globals"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/scripts/generate_candidates.py",
+    "source_sha256": "2dd8eb4c66faad61cacda3067a1552faf653dae69f51d3ddc38c993cb4989c24",
+    "packaged": "src/candidate_operators.py",
+    "transformation": "selected numerical primitives only; renamed entry points and explicit inputs replace file-loading globals"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_joint_v4/scripts/prepare_pools.py",
+    "source_sha256": "28379e0b25a38c882bdbfdc5c39423926aa8a232560e12e205dab25664c2d1e4",
+    "packaged": "src/candidate_operators.py",
+    "transformation": "selected numerical primitives only; renamed entry points and explicit inputs replace file-loading globals"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/scripts/common.py",
+    "source_sha256": "2bcc7dd83b48cb5cae1eabb8d21339ab89ca708163b4b0d0b7cdf1f48f1821c7",
+    "packaged": "reproduction/upstream/quartz_v1/common.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/scripts/geometry.py",
+    "source_sha256": "88d434f1e35ca482040c35442ef44ca3895aa1f9766959bef86eabc4be5f03d5",
+    "packaged": "reproduction/upstream/quartz_v1/geometry.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/scripts/candidates.py",
+    "source_sha256": "17db854fdb24cf70d6aa1583905f18a3b0b64e63b95126ae15a87bd8f6f87b6e",
+    "packaged": "reproduction/upstream/quartz_v1/candidates.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/scripts/infer.py",
+    "source_sha256": "0eaaf1d707171a847d6b584c72990eddafffcb7527e41e12f38498922f79ab9c",
+    "packaged": "reproduction/upstream/quartz_v1/infer.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/scripts/public_manifest.py",
+    "source_sha256": "cf57f2424ba0f3eb86f7e368e369ec6b540badb1db9e942cdf1caa3202846353",
+    "packaged": "reproduction/upstream/quartz_v1/public_manifest.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/scripts/provenance.py",
+    "source_sha256": "b85105886346dd0e09067728ece78f624c52768b9bec120acc8833bfb27a482f",
+    "packaged": "reproduction/upstream/quartz_v1/provenance.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_v1/scripts/prepare_gt.py",
+    "source_sha256": "a9e2878304fe7362d73144f0ac16c40de1c2192e27116d897133033bd36a304f",
+    "packaged": "reproduction/upstream/quartz_v1/prepare_gt.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/scripts/v2_common.py",
+    "source_sha256": "687c876ea678f772145a056956bc6328af76452fa31a101797baaa61990d97d7",
+    "packaged": "reproduction/upstream/quartz_flow_v2/v2_common.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/scripts/prepare_windows.py",
+    "source_sha256": "226eb24e8eb0a789253010827277d9e2929a61baba5ba704f7d450ad1f6c4642",
+    "packaged": "reproduction/upstream/quartz_flow_v2/prepare_windows.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/scripts/infer_observations.py",
+    "source_sha256": "596c5f87aca62d9506e8bf466045f91a39e633ba4495b2ce0592916921870d97",
+    "packaged": "reproduction/upstream/quartz_flow_v2/infer_observations.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/scripts/window_tracking.py",
+    "source_sha256": "6219ea4550c15698c2bb51a5f0067437c649520dee8125f11209ef68c062b096",
+    "packaged": "reproduction/upstream/quartz_flow_v2/window_tracking.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/scripts/generate_candidates.py",
+    "source_sha256": "2dd8eb4c66faad61cacda3067a1552faf653dae69f51d3ddc38c993cb4989c24",
+    "packaged": "reproduction/upstream/quartz_flow_v2/generate_candidates.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_nds_v3/scripts/nds_common.py",
+    "source_sha256": "28dc528ed57b7c187c4b800d2dfd242d72a1e7da655f817def73855950de519d",
+    "packaged": "reproduction/upstream/quartz_nds_v3/nds_common.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_nds_v3/scripts/prepare_candidates.py",
+    "source_sha256": "a82d5bfdf106b783a7180a9350bdd80a4bae7bc203dd6840d85ef5b646b647f6",
+    "packaged": "reproduction/upstream/quartz_nds_v3/prepare_candidates.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_joint_v4/scripts/joint_common.py",
+    "source_sha256": "5211ad7c994849560832c8a732b6759f431069054026fb910fc0db5018b529c6",
+    "packaged": "reproduction/upstream/quartz_joint_v4/joint_common.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/evaluation/quartz_joint_v4/scripts/prepare_pools.py",
+    "source_sha256": "28379e0b25a38c882bdbfdc5c39423926aa8a232560e12e205dab25664c2d1e4",
+    "packaged": "reproduction/upstream/quartz_joint_v4/prepare_pools.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${HISTORICAL_WORKSPACE}/qwen36_coding_v1/src/prepare.py",
+    "source_sha256": "3a07355294c7d6e4409b3d2b9d07188970ed361064a1475508fee0eaf8db8f16",
+    "packaged": "reproduction/upstream/preparation/prepare.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${HISTORICAL_WORKSPACE}/qwen36_coding_v1/src/common_run.py",
+    "source_sha256": "74ed06185e1f58168daca729f3dd79da1bf7651955c1d4b9e969bb1335930ef6",
+    "packaged": "reproduction/upstream/preparation/common_run.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${HISTORICAL_WORKSPACE}/ctgei_kimi_v6/src/state.py",
+    "source_sha256": "e2a7cbfd695e6c8cf1f873af0e4b998f2b500501a798cee3b72c99a2e08b65d2",
+    "packaged": "reproduction/upstream/shared/state.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${HISTORICAL_WORKSPACE}/ctgei_kimi_v6/src/io_utils.py",
+    "source_sha256": "af5f99ff13472708f1aea0e7a57be59bc96723e39810ead6810472526c04b998",
+    "packaged": "reproduction/upstream/shared/io_utils.py",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/runtime/cross_task_tools/__init__.py",
+    "source_sha256": "7de3963a5a16359305f1573581bee6a617d0cbff3bb084c8817cbb0d3bcf7fa8",
+    "packaged": "reproduction/upstream/cross_task_tools/__init__.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/scripts/recover_truncated.py",
+    "source_sha256": "670a1a9f6f8f5f7e8b7c3d218d4c9b27cb66c5c29e98c2a035695d71dc3fee96",
+    "packaged": "scripts/recover_truncated.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/scripts/finalize_interrupted_pilot.py",
+    "source_sha256": "8928b9151f21ed1a07f2c75bd5174860d5f69b6346822affefc6bc16e3acb946",
+    "packaged": "scripts/finalize_interrupted_pilot.py",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/reports/gpt61sol_high_coding100_200usd_20261115/summary.json",
+    "source_sha256": "8859fc9d5aee5810436ba40a69a01058bcb04b89a049e38dac7ed5b551465dde",
+    "packaged": "reproduction/results/summary.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/reports/gpt61sol_high_coding100_200usd_20261115/cases.json",
+    "source_sha256": "0dc2add984b0568eed7d567ccb082d6a77870251b8f5e109e9087000b314e718",
+    "packaged": "reproduction/results/cases.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/reports/gpt61sol_high_coding100_200usd_20261115/cases.csv",
+    "source_sha256": "9dec59a70aa780707b35a5af270c9da56d30cba417d82f7fecd64c42efc08893",
+    "packaged": "reproduction/results/cases.csv",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/reports/gpt61sol_high_coding100_200usd_20261115/selection.json",
+    "source_sha256": "919bbc212d159ffb165971ca087818a80ca10aeb74d68b6c362caf95624f5fee",
+    "packaged": "reproduction/results/selection.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/reports/gpt61sol_high_coding100_200usd_20261115/selection_manifest.json",
+    "source_sha256": "d78944e24befff1e45c6a2015f6241130f25e1e9ee9dfcd5328fd2ae9e9aae9c",
+    "packaged": "reproduction/results/selection_manifest.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/reports/gpt61sol_high_coding100_200usd_20261115/final_execution_audit.json",
+    "source_sha256": "db9400b97e6d0bf994654deec6abe56e8a267c3436b0a713dcc06c1accc4a8e5",
+    "packaged": "reproduction/results/final_execution_audit.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/reports/gpt61sol_high_coding100_200usd_20261115/budget_checks.json",
+    "source_sha256": "2e1a97feba2341ed069f628695e1f27bcc5f706e1db6dcd05237f5710bf366d6",
+    "packaged": "reproduction/results/budget_checks.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/reports/gpt61sol_high_coding100_200usd_20261115/improved_cases.json",
+    "source_sha256": "74b59290e9840ad46bd83b2ca27cd636a5feaea54caa3fa8bc9b9aa89bc79e3c",
+    "packaged": "reproduction/results/improved_cases.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${LOCAL_PROJECT}/reports/gpt61sol_high_coding100_200usd_20261115/SEVEN_OPTIMAL_CASES_STEP_BY_STEP.md",
+    "source_sha256": "46109a8353b2185e45d40b8643eaa073ad54ecf18b752e4cfae2ec82297bcd58",
+    "packaged": "examples/SEVEN_OPTIMAL_CASES_STEP_BY_STEP.md",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/3425c66163af46cca4c96006d425e0eb/DET_TO_SEG-55/decision.json",
+    "source_sha256": "9980647d42d5dac085afc1c1a1fcd52bd55ff334bf51dc36fa0e121aa2d3e3b0",
+    "packaged": "examples/segmentation_scene-0017/decision.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/3425c66163af46cca4c96006d425e0eb/DET_TO_SEG-55/diagnostic_trace.json",
+    "source_sha256": "d222cf7d3b94dba7569f390441a0e447bdd1840d5df7adffa917ca2b666e7822",
+    "packaged": "examples/segmentation_scene-0017/diagnostic_trace.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/c78ad98d8c75474f8e796d485114d3e0/D-13/decision.json",
+    "source_sha256": "914d18d4908871100f8dbaaf58a8252aace35c027cc5e614d55c619522a516b1",
+    "packaged": "examples/detection_scene-0522/decision.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/c78ad98d8c75474f8e796d485114d3e0/D-13/diagnostic_trace.json",
+    "source_sha256": "b07c34daf78f7ff63cf300cb64f1a3492b7468318a20a45036a219529f79d744",
+    "packaged": "examples/detection_scene-0522/diagnostic_trace.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/b380e87cf0df4f129ec3f6892ba7f6be/TRACK_TO_SEG-0/decision.json",
+    "source_sha256": "af34e2bccfe55823a3fb02f0c3a659be496a3320822d9d860b908f968e84e620",
+    "packaged": "examples/segmentation_scene-0770/decision.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/b380e87cf0df4f129ec3f6892ba7f6be/TRACK_TO_SEG-0/diagnostic_trace.json",
+    "source_sha256": "fa28baef1a0cb031c4cb80113d65fb6efeeeb1b50e0fe96d6b5b8437596110b6",
+    "packaged": "examples/segmentation_scene-0770/diagnostic_trace.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/2cafae36d20443a8910bfd8999f40998/DET_TO_SEG-18/decision.json",
+    "source_sha256": "1e903bb8c87ec3782e5dfbaa4c9077e5fe84768cb28a1bca27f65e4603d743f6",
+    "packaged": "examples/segmentation_scene-0963/decision.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/2cafae36d20443a8910bfd8999f40998/DET_TO_SEG-18/diagnostic_trace.json",
+    "source_sha256": "8f7fb50210dd8007a4b2e9acd940eb366a4d4425e15af68a186296140ede7453",
+    "packaged": "examples/segmentation_scene-0963/diagnostic_trace.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/fe2427d40c2741a5a41207cd031c27ba/D-9/decision.json",
+    "source_sha256": "a7c36a9c2893acf9cdc1011cbca1a0657d04b0122d84f28b58e5140b66f7a45d",
+    "packaged": "examples/detection_scene-0906/decision.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/fe2427d40c2741a5a41207cd031c27ba/D-9/diagnostic_trace.json",
+    "source_sha256": "f1025039f04b234867fc99a611b96f07897178674f1296ed94f0b775092e2cd6",
+    "packaged": "examples/detection_scene-0906/diagnostic_trace.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/817e7e533a424c6f8c8140050c971f68/TRACK_TO_SEG-3/decision.json",
+    "source_sha256": "52d08ce2c45121216175a04198869072ea8a808091ffb5e9cf0e2c0981a686f6",
+    "packaged": "examples/segmentation_scene-0967/decision.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/817e7e533a424c6f8c8140050c971f68/TRACK_TO_SEG-3/diagnostic_trace.json",
+    "source_sha256": "077b6c94430fb55c2be718d6cd809776516b9d84152a388c99e45e9f308bdb7f",
+    "packaged": "examples/segmentation_scene-0967/diagnostic_trace.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/667256047cdc473caff95901be551788/D-1/decision.json",
+    "source_sha256": "e7ccaf19e1ab38d678e36323a2e6367b154cc994fc51b2edfb8f83b52e3d4272",
+    "packaged": "examples/detection_scene-0925/decision.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${EXPERIMENT_ROOT}/episodes/667256047cdc473caff95901be551788/D-1/diagnostic_trace.json",
+    "source_sha256": "4df8400ae929c57ebe51fd3007e4f35b120d20df44501fa626ca69402c2b8e39",
+    "packaged": "examples/detection_scene-0925/diagnostic_trace.json",
+    "transformation": "path/endpoint placeholders"
+  },
+  {
+    "source": "${PROJECT_ROOT}/releases/coding_release_20261115_build/templates/DATA_CONTRACT.md",
+    "source_sha256": "98996c4214d287dcf54254edef0172c4d9b07ac0d627050b7eb80ac43f888187",
+    "packaged": "docs/DATA_CONTRACT.md",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${PROJECT_ROOT}/releases/coding_release_20261115_build/templates/README.md",
+    "source_sha256": "6f650ab494a65afaff24f646dc3ae9e923963e3782f9a868392c7a130521bf94",
+    "packaged": "README.md",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${PROJECT_ROOT}/releases/coding_release_20261115_build/templates/RELEASE_SCOPE.md",
+    "source_sha256": "07857d5f40edd3091b741a21dc42385af21649d1a95a0446692b8af40ba0c20a",
+    "packaged": "docs/RELEASE_SCOPE.md",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${PROJECT_ROOT}/releases/coding_release_20261115_build/templates/REPRODUCTION.md",
+    "source_sha256": "f55b9e4f3492b5bdd322fb4886e1b68e0ccde3a5329920235e999bb2e348ce20",
+    "packaged": "docs/REPRODUCTION.md",
+    "transformation": "unchanged"
+  },
+  {
+    "source": "${PROJECT_ROOT}/releases/coding_release_20261115_build/templates/requirements.txt",
+    "source_sha256": "fb8006af7b8508f3f74d790a50e412abb4c8f2c3e1029ed08c31be1d713196e2",
+    "packaged": "requirements.txt",
+    "transformation": "unchanged"
+  }
+]

@@ -1,0 +1,126 @@
+{
+  "protocol_id": "pointtaskagent-center-refinement-joint-oracle-v4",
+  "created_utc": "2026-10-31T02:35:36.564308+00:00",
+  "frames": 6019,
+  "scenes": 150,
+  "tool_version": "4.0.0",
+  "tool_path": "${PROJECT_ROOT}/runtime/cross_task_tools/__init__.py",
+  "tool_sha256": "7de3963a5a16359305f1573581bee6a617d0cbff3bb084c8817cbb0d3bcf7fa8",
+  "source_protocols": {
+    "${PROJECT_ROOT}/evaluation/quartz_v1/protocol.json": "080c45bf19d39fe67d3760eccaf2af5e1e83deeab23259782961f1194f0bc9f7",
+    "${PROJECT_ROOT}/evaluation/quartz_flow_v2/protocol.json": "61314c15fb2ccfabadf3deec40fba763103582272c17fa0337739d6b3bd76288",
+    "${PROJECT_ROOT}/evaluation/quartz_nds_v3/protocol.json": "bd7f7687d3508b37a5ac49f1293f009cd2f35820faf65cb0538b166fad952eae"
+  },
+  "historical_metrics": {
+    "det_baseline": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/results/metrics/strict_baseline/detection/verified_metrics.json",
+    "track_before": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/results/metrics/track_window_to_det/detection/verified_metrics.json",
+    "seg_before": "${PROJECT_ROOT}/evaluation/quartz_nds_v3/results/metrics/seg__full/verified_metrics.json",
+    "temporal_before": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/results/metrics/temporal_to_det/detection/verified_metrics.json",
+    "track_refine_replay": "${PROJECT_ROOT}/evaluation/quartz_nds_v3/results/metrics/track__replace_center/verified_metrics.json",
+    "seg_refine_replay": "${PROJECT_ROOT}/evaluation/quartz_nds_v3/results/metrics/seg__replace_center/verified_metrics.json",
+    "track_add": "${PROJECT_ROOT}/evaluation/quartz_nds_v3/results/metrics/track__add_only/verified_metrics.json",
+    "seg_add": "${PROJECT_ROOT}/evaluation/quartz_nds_v3/results/metrics/seg__add_only/verified_metrics.json",
+    "seg_baseline": "${PROJECT_ROOT}/evaluation/quartz_v1/results/metrics/baseline/segmentation/verified_metrics.json",
+    "det_seg_original": "${PROJECT_ROOT}/evaluation/quartz_v1/results/metrics/det_to_seg/segmentation/verified_metrics.json",
+    "track_seg": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/results/metrics/track_window_to_seg/segmentation/verified_metrics.json"
+  },
+  "historical_metric_sha256": {
+    "det_baseline": "cbdcbd258f5088ad8e843570114ec033008095335025758af9f66ad9818fc56c",
+    "track_before": "660ab37d0921edffb051fd5c2c8d3b6d697a1b0f9e98a50a745a4cdc58b3e56b",
+    "seg_before": "366c10212c837013257648aa70b4f70026941fbad7cf9aac542d0378434846a7",
+    "temporal_before": "64f5497ae98cd4fb0f3661417306e7d30d3abbaf8b36ba4c8d0ad245789670f9",
+    "track_refine_replay": "9355cf875ce346f281c3fb6af4b8f48b5feb968ddcb69d58765347f36885b0dc",
+    "seg_refine_replay": "71dc3efba9ed8ba7d725bdd3a4a1ea8903e767be01f32cd354e6f47eadbada06",
+    "track_add": "b5bf9a77fa0614c9e064448e35f5e3c23368b92ee0a80e0d940805716eedef71",
+    "seg_add": "8b1c26e93b56ac0beb906d664dbb4e2079922452fd3f7034aabd4b091582b3d6",
+    "seg_baseline": "70fcd3949a27bc7be168ba69b22d3a68530accf182c7d8684995d32ac7e0b425",
+    "det_seg_original": "35d6930f6122f8d46255d2cbe0b950167374fef6b04333ad8205ffa0aed1aae2",
+    "track_seg": "f63c2a1c7cf71e995784ff711edc0ff845768134af5f5100ba8a3f87fa854f33"
+  },
+  "models": {
+    "detection": {
+      "name": "LION-Mamba",
+      "commit": "f7cbdf97e805de3d6beff5f1995e45926680ad4f",
+      "checkpoint_sha256": "0c03eeb2725e3e77203df6c11819981837c02179fdb8b56c40f17f14976a5634",
+      "sweeps": 10,
+      "strict_load": true
+    },
+    "segmentation": {
+      "name": "LitePT-S",
+      "commit": "436d04801c8151faebe66a1b2d368a9711e7e6aa",
+      "checkpoint_sha256": "95f151f6edcfbf315cd06df6afd261f2a2fde300d3c693dd26b1305d642ecc30",
+      "tta": "Unmodified official small-v1m1 test transforms: initial 0.025m voxelization, 0.05m fragment voxelization, five scales and their flips",
+      "probabilities": "Float32 softmax votes averaged per point, restored to original order; argmax must equal native vote argmax",
+      "strict_load": true
+    },
+    "tracking": {
+      "name": "MCTrack",
+      "commit": "a648ee2763ea351a77ddb5232ca00d848d0e46c9",
+      "mode": "ONLINE",
+      "thresholds": "Unmodified upstream CenterPoint online thresholds, applied to LION-Mamba",
+      "history": "Capture once after native predict and before native association/update; reset at scene boundaries"
+    }
+  },
+  "history": "Fresh empty MCTrack per target; process allowed past scans in chronological order; predict before current observation. Same original thresholds/noise, actual measured dt and backward-prediction interval; no prior full-scene KF read.",
+  "strict_history_us": 500000,
+  "max_historical_sweeps": 10,
+  "tool_actions": {
+    "REFINE_CENTER": "Copy original LION box and replace XYZ translation only; preserve all other fields exactly",
+    "ADD_BOX": "Use frozen full candidate only when original association target is null; independent operation",
+    "LEGACY_REPLACE_BOX": "Explicit ablation, copy complete frozen candidate; old artifacts immutable"
+  },
+  "detection_branches": [
+    "track_refine_replay",
+    "seg_refine_replay",
+    "track_refine",
+    "seg_refine",
+    "temporal_refine",
+    "joint_refine",
+    "track_refine_budget",
+    "seg_refine_budget",
+    "temporal_refine_budget",
+    "joint_refine_budget",
+    "track_add",
+    "seg_add",
+    "joint_add",
+    "track_combo",
+    "seg_combo",
+    "joint_combo"
+  ],
+  "segmentation_branches": [
+    "det_seg",
+    "track_seg",
+    "joint_seg",
+    "det_seg_budget",
+    "track_seg_budget",
+    "joint_seg_budget"
+  ],
+  "det_oracle": {
+    "objective": "Unchanged lexicographic sum(TP-FP) at0.5/1/2/4m then negative sum matched xy distance; official range/rack filtering; no-op wins ties",
+    "reproduction": "Native fixed candidate order, first improving candidate per original target; exact v3 replay required",
+    "grouped_main": "Original target order descending detector score then index; compare current no-op with every available frozen center for that target; choose largest objective, first candidate wins exact non-noop ties; each target once; single-tool controls use same selector",
+    "joint_pool": "Interleave native Tracking and Segmentation candidate order, Tracking first. No averaging, fitting or GT-generated centers",
+    "candidate_budget": "Per-frame B=min(number of refine candidates from Tracking, Segmentation, fixed temporal). Every matched-budget branch sees exactly B candidates: native prefix for singles, interleaved prefix for joint. B uses no GT, may be0. Variants count separately; actual accepted operation counts reported",
+    "add_ablation": "ADD_BOX selected independently on baseline; joint pool alternates sources; combo first applies REFINE_CENTER selection then greedily considers ADD_BOX candidates; single combos use reproduction selector and joint combo uses grouped selector. No summed AP/NDS claims"
+  },
+  "seg_oracle": {
+    "inputs": "Same original LitePT-S labels; existing Det->Seg and strict Track->Seg candidates. Det->Seg identical original algorithm re-run only on80 corrected detector input frames, no model inference; unaffected candidates/output labels verified",
+    "unit": "Frozen candidate region with fixed predicted labels; best positive net correct non-ignore points among existing boost variants; no-op on ties; at most one variant per source region",
+    "conflict": "Alternate complete source regions Det first, preserving each native source order. Already modified point indices are excluded by a GT-free first-accepted-region mask; cannot select arbitrary GT-correct subsets",
+    "candidate_budget": "B=min(number of Det->Seg candidates,number of Track->Seg candidates) perframe; single native prefixes and mixed joint prefix have exactly B variants, grouping afterward; no GT budget allocation",
+    "metrics": "Full16 official LidarSegEval, independent aggregate confusion crosscheck; all16class IoU, object10/background6 and frame/scene effects; independent repair/overlap/conflict counts"
+  },
+  "generation_gt_firewall": true,
+  "threshold_tuning": "Forbidden on full Validation; reuse every existing tool threshold and checkpoint",
+  "joint_scope": "Two independent destination-task experiments; no circular feeding of Oracle-refined detections back into segmentation",
+  "statistical_reporting": "Scene-level paired bootstrap for segmentation from stored confusion matrices only; no claim of deployment or seed robustness",
+  "out_of_scope": [
+    "Qwen3.5-4B",
+    "CTGEI Agent",
+    "SFT",
+    "GRPO",
+    "RL training",
+    "Waymo",
+    "model inference"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "index": 71,
+  "scene": "scene-0967",
+  "sample_token": "817e7e533a424c6f8c8140050c971f68",
+  "task": "segmentation",
+  "episode": "TRACK_TO_SEG-3",
+  "status": "COMPLETE",
+  "selected": "TRACK_TO_SEG:0",
+  "code_attempts": 4,
+  "model_calls": 5,
+  "summary": "Select the existing one-point pedestrian-to-motorcycle patch at original point 2020. Both alternatives are executable-equivalent. The decisive candidate-symmetric ray comparison E3 places its 2.562 m range near motorcycle-context returns at 2.576–2.600 m, rather than angularly adjacent pedestrian returns at 2.164–2.218 m. E2 finds nearest motorcycle/pedestrian context at 0.030/0.201 m, and common-camera V2–V3 show separated surfaces. The approximately 0.047 m fitted-plane range offset and S0's slight pedestrian preference remain counterevidence; exact surface membership is not proven. Reused S0 labels, probabilities, and historical-box boosting were insufficient alone. Current geometry and sensor-ray separation better support this patch, without independent-source or confirmed-track claims.",
+  "episode_dir": "${EXPERIMENT_ROOT}/episodes/817e7e533a424c6f8c8140050c971f68/TRACK_TO_SEG-3",
+  "gt_used_only_offline": true,
+  "repaired_points": 1,
+  "harmed_points": 0,
+  "net_correct_points": 1,
+  "changed_points": 1,
+  "baseline_mIoU_percent": 95.70565910743896,
+  "selected_mIoU_percent": 95.73607846352846,
+  "delta_mIoU_pp": 0.030419356089495864,
+  "baseline_mAcc_percent": 97.77026317383581,
+  "selected_mAcc_percent": 97.78191004082859,
+  "delta_mAcc_pp": 0.01164686699277695,
+  "all_candidate_effects": {
+    "TRACK_TO_SEG:0": {
+      "repaired_points": 1,
+      "harmed_points": 0,
+      "net_correct_points": 1,
+      "changed_points": 1
+    },
+    "TRACK_TO_SEG:1": {
+      "repaired_points": 1,
+      "harmed_points": 0,
+      "net_correct_points": 1,
+      "changed_points": 1
+    }
+  },
+  "effect": "beneficial",
+  "oracle_qualified": true,
+  "qualified_actions": [
+    "TRACK_TO_SEG:0",
+    "TRACK_TO_SEG:1"
+  ],
+  "candidate_objectives": {
+    "KEEP": 0,
+    "TRACK_TO_SEG:0": 1,
+    "TRACK_TO_SEG:1": 1
+  },
+  "code_or_format_errors": 0,
+  "successful_code_steps": 3,
+  "diagnostic_questions": [
+    "Which original point and semantic labels actually disagree, and is that point geometrically attached to one surface or positioned between competing surfaces?",
+    "Does point `2020` continue the nearby measured surface, or protrude toward a distinct pedestrian-labeled surface?",
+    "Is point `2020`’s measured range consistent with the motorcycle-side surface or the pedestrian-side surface along its actual LiDAR ray?",
+    "The accumulated evidence better supports assigning point `2020` to motorcycle than to the nearby pedestrian surface."
+  ],
+  "model_requested_views": 2,
+  "finalization": "PYTHON_RETURN_DECISION"
+}

@@ -1,0 +1,59 @@
+{
+  "index": 1,
+  "scene": "scene-0017",
+  "sample_token": "3425c66163af46cca4c96006d425e0eb",
+  "task": "segmentation",
+  "episode": "DET_TO_SEG-55",
+  "status": "COMPLETE",
+  "selected": "DET_TO_SEG:0",
+  "code_attempts": 4,
+  "model_calls": 6,
+  "summary": "Select the truck patch, with uncertainty. The decisive E4 comparison found matched-azimuth disputed upper/lower truck returns separated by only 0.034–0.080 m in horizontal range and about 1.334° in elevation, consistent with the observed vertical sampling of unchanged truck surfaces. This weakens the initial distinct-layer hypothesis. E1 also places point 19957 only 0.094 m from truck support, while E3 shows the seven upper disputed points form a contiguous observed row. Counterevidence remains: point 20150 has a 1.712 m matched-range discontinuity, two upper points lack angular matches, and geometry does not confirm semantic or instance identity. E2 found no unchanged manmade continuation in the wider crop, but missing returns are not proof of absence. Box inclusion and S0 probabilities alone were insufficient because both patches reused D0, S0 and current LiDAR; the range-profile test supplied a new diagnostic, not independent validation. Both patches execute identical labels, so DET_TO_SEG:0 is selected without claiming its boost is physically superior.",
+  "episode_dir": "${EXPERIMENT_ROOT}/episodes/3425c66163af46cca4c96006d425e0eb/DET_TO_SEG-55",
+  "gt_used_only_offline": true,
+  "repaired_points": 8,
+  "harmed_points": 0,
+  "net_correct_points": 8,
+  "changed_points": 8,
+  "baseline_mIoU_percent": 62.26127052668532,
+  "selected_mIoU_percent": 62.8775346857328,
+  "delta_mIoU_pp": 0.6162641590474749,
+  "baseline_mAcc_percent": 66.2822765314892,
+  "selected_mAcc_percent": 66.88833713754981,
+  "delta_mAcc_pp": 0.6060606060606091,
+  "all_candidate_effects": {
+    "DET_TO_SEG:0": {
+      "repaired_points": 8,
+      "harmed_points": 0,
+      "net_correct_points": 8,
+      "changed_points": 8
+    },
+    "DET_TO_SEG:1": {
+      "repaired_points": 8,
+      "harmed_points": 0,
+      "net_correct_points": 8,
+      "changed_points": 8
+    }
+  },
+  "effect": "beneficial",
+  "oracle_qualified": true,
+  "qualified_actions": [
+    "DET_TO_SEG:0",
+    "DET_TO_SEG:1"
+  ],
+  "candidate_objectives": {
+    "KEEP": 0,
+    "DET_TO_SEG:0": 8,
+    "DET_TO_SEG:1": 8
+  },
+  "code_or_format_errors": 0,
+  "successful_code_steps": 4,
+  "diagnostic_questions": [
+    "Do the actual changed points continue the observed truck surface, or occupy a distinct surface? Are the two patches identical in their executable labels?",
+    "Is the upper disputed row a vertically sampled part of the truck’s side, or does it continue into a separate manmade surface outside the proposal box?",
+    "Does the disputed upper row connect laterally to unchanged truck returns at the same height, with continuous sensor range, rather than to the lower row used by the earlier plane fits?",
+    "Do the disputed upper returns share sensor-azimuth and depth continuity with the lower truck returns on their own side, despite being separated from the opposite-side upper row?"
+  ],
+  "model_requested_views": 4,
+  "finalization": "JSON_ONLY_AFTER_4_CODE_ATTEMPTS_CONTEXT_GUARD"
+}

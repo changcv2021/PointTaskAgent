@@ -1,0 +1,228 @@
+{
+  "protocol_id": "pointtaskagent-nuscenes-flow-window-quartz-v2",
+  "split": "official nuScenes val",
+  "frames": 6019,
+  "scenes": 150,
+  "seed": 20261030,
+  "baseline": {
+    "path": "${PROJECT_ROOT}/evaluation/quartz_v1",
+    "protocol_sha256": "080c45bf19d39fe67d3760eccaf2af5e1e83deeab23259782961f1194f0bc9f7",
+    "preserve_results": true
+  },
+  "models": {
+    "flow": {
+      "name": "DeltaFlow nuScenes",
+      "checkpoint_sha256": "114aa195c4c2a1e36c5c2584b17f5dcaa364732225657d1cc1d494ac045baaca",
+      "checkpoint_bytes": 239598465,
+      "DeltaFlow_commit": "3372a5b07a5cc550e8dc24175a71e5aca1dcc32b",
+      "OpenSceneFlow_commit": "1c8fc5a201c3f030ed854fd627aa937160ed7a74",
+      "target": {
+        "_target_": "src.models.DeltaFlow",
+        "voxel_size": [
+          0.15,
+          0.15,
+          0.15
+        ],
+        "point_cloud_range": [
+          -38.4,
+          -38.4,
+          -3,
+          38.4,
+          38.4,
+          3
+        ],
+        "num_frames": 5,
+        "planes": [
+          16,
+          32,
+          64,
+          128,
+          256,
+          256,
+          128,
+          64,
+          32,
+          16
+        ],
+        "num_layer": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "decay_factor": 0.4,
+        "decoder_option": "deflow",
+        "grid_feature_size": [
+          512,
+          512,
+          40
+        ]
+      },
+      "strict_load": true
+    },
+    "detection": {
+      "name": "LION-Mamba",
+      "commit": "f7cbdf97e805de3d6beff5f1995e45926680ad4f",
+      "checkpoint_sha256": "0c03eeb2725e3e77203df6c11819981837c02179fdb8b56c40f17f14976a5634",
+      "sweeps": 10,
+      "strict_load": true
+    },
+    "segmentation": {
+      "name": "LitePT-S",
+      "commit": "436d04801c8151faebe66a1b2d368a9711e7e6aa",
+      "checkpoint_sha256": "95f151f6edcfbf315cd06df6afd261f2a2fde300d3c693dd26b1305d642ecc30",
+      "tta": "Unmodified official small-v1m1 test transforms: initial 0.025m voxelization, 0.05m fragment voxelization, five scales and their flips",
+      "probabilities": "Float32 softmax votes averaged per point, restored to original order; argmax must equal native vote argmax",
+      "strict_load": true
+    },
+    "tracking": {
+      "name": "MCTrack",
+      "commit": "a648ee2763ea351a77ddb5232ca00d848d0e46c9",
+      "mode": "ONLINE",
+      "thresholds": "Unmodified upstream CenterPoint online thresholds, applied to LION-Mamba",
+      "history": "Capture once after native predict and before native association/update; reset at scene boundaries"
+    }
+  },
+  "input_protocol": {
+    "strict_history_us": 500000,
+    "max_historical_sweeps": 10,
+    "actual_allowed_scans": "Unique historical scan identities in frozen LION input, clipped to 0.5 s; normally 9 history + current. Every nested observation must belong to this set.",
+    "historical_detection": "Same LION checkpoint with MAX_SWEEPS=1; regenerated on each unique historical scan; no history within historical observations. Single-sweep checkpoint use is an input adaptation, not a separately trained single-sweep detector.",
+    "tracking": "Fresh empty MCTrack per target; process allowed past scans in chronological order; predict before current observation. Same original thresholds/noise, actual measured dt and backward-prediction interval; no prior full-scene KF read.",
+    "fixed_temporal": "Same filtered one-scan boxes and current LiDAR as window MCTrack; constant-velocity propagation with native predicted velocity; same-class 2m suppression; identical candidate geometry tests and budget. Report both GT-free fixed policy and independent Oracle.",
+    "causal_flow": "Five slots at ~10 Hz: target=current, source=~t-0.1, context=~t-0.2,-0.3,-0.4; every second historical sweep, oldest repeated only at scene boundary. Learned source flow transferred to current raw points through explicit mutual nearest correspondence. No future frame.",
+    "native_flow_quality": "Separate keyframe->next ~0.1 s prediction with three past context scans; native forward outputs include future target and are forbidden in collaboration. Scene-end unavailable pairs are explicit.",
+    "missing_pair": "Retain all 6019 target frames; unavailable causal flow produces empty candidates/no-op. Count boundaries and range/ground/correspondence exclusions.",
+    "ground": "Official nuScenes ego removal and linefit config, n_threads=1; z<-1.82 ground; range from checkpoint. All raw point identities retained with explicit validity masks."
+  },
+  "flow": {
+    "max_correspondence_distance_m": 0.5,
+    "dynamic_speed_mps": 0.5,
+    "dynamic_classes": [
+      "car",
+      "truck",
+      "construction_vehicle",
+      "bus",
+      "trailer",
+      "motorcycle",
+      "bicycle",
+      "pedestrian"
+    ],
+    "motion_clusters": "DBSCAN on [xyz/0.75, velocity/2], eps=1,min_samples=5; mean current/source class probability >=0.5; median velocity deviation <=1.5m/s; max64 by size and centroid",
+    "flow_to_det": "PCA percentile box as v1, class priors fixed; predicted motion supplies velocity; optional bounded center/velocity-only replacement preserves original dimensions/yaw; preserve replacement score; new score=0.5*cluster semantic confidence; max64",
+    "flow_to_seg": "Mutual correspondence <=0.5m, speed>=0.5m/s; source class confidence>=0.6, current class probability>=0.1,current confidence<0.9; spatial connected components>=5; log boosts0.5/1.0, max64 regions; no box painting",
+    "ego_temporal_to_seg": "Same source-frame segmentation and local probability tool with mutual ego-aligned nearest neighbors, no flow or motion threshold; independent Oracle control"
+  },
+  "temporal": {
+    "max_candidates": 64,
+    "track_to_det": "Same geometric verification and bounded adjustment as v1, within fresh 0.5s state.",
+    "track_to_seg": "Fresh historical predicted boxes with the same local probability/geometry tool as v1 Det->Seg; independent additional control for third-task comparison",
+    "fixed_policy": "First unadjusted proposal with evidence score>=0.25; append only if no same-class detection within2m; replace center by mean only if evidence score exceeds current detection score; each target once; no GT."
+  },
+  "class_lwh_m": {
+    "car": [
+      4.5,
+      1.8,
+      1.6
+    ],
+    "truck": [
+      7.0,
+      2.5,
+      3.0
+    ],
+    "construction_vehicle": [
+      6.0,
+      2.8,
+      3.0
+    ],
+    "bus": [
+      12.0,
+      2.5,
+      3.2
+    ],
+    "trailer": [
+      12.0,
+      2.5,
+      3.5
+    ],
+    "barrier": [
+      2.0,
+      0.5,
+      1.0
+    ],
+    "motorcycle": [
+      2.0,
+      0.8,
+      1.5
+    ],
+    "bicycle": [
+      1.8,
+      0.6,
+      1.5
+    ],
+    "pedestrian": [
+      0.8,
+      0.7,
+      1.7
+    ],
+    "traffic_cone": [
+      0.5,
+      0.5,
+      0.7
+    ]
+  },
+  "oracle": {
+    "detection": "Greedy fixed candidate order: accept a candidate only if it lexicographically improves (sum over 0.5/1/2/4m of TP-FP, negative sum matched center distances), with class-consistent one-to-one matching. Each original detection can be modified at most once. No-op wins ties. Official mAP/NDS are computed afterward and may decrease.",
+    "segmentation": "Choose at most one candidate per detector region by increased correct non-ignore point count; evaluate only candidate-changed indices; accept strictly positive changes, no-op wins ties. Resolve overlapping regions in descending detector score order, each point modified at most once. Report full 16-class official mIoU, which need not improve.",
+    "tracking": "Among frozen transition candidates, minimize the sum of wrong identity associations relative to prior matched GT instance identities and ID switches relative to prior GT-instance-to-track matches, then maximize matched outputs, then minimize center distance; no-op wins ties. State updates continue sequentially, and final full-sequence official AMOTA is mandatory.",
+    "branches": [
+      "baseline",
+      "seg_to_det",
+      "det_to_seg",
+      "track_to_det",
+      "det_to_track"
+    ],
+    "no_joint_best_of": true
+  },
+  "e1": {
+    "matching": "Score-descending, same-class one-to-one nearest-center matching at 2m, using official detection filtering. This analysis operating point is distinct from official multi-threshold AP.",
+    "detection_errors": "For unmatched GT: classification error if nearest differently classified unmatched prediction is within 2m; otherwise localization error if nearest same-class unmatched prediction is within 4m; otherwise miss. Extra predictions counted separately.",
+    "flow_to_det": "For each unmatched GT target, >=5 in-box GT-class points; one motion-consistent predicted cluster of correct category supports >=50% of these points. Whole-frame flow clusters frozen before GT analysis.",
+    "flow_to_seg": "All wrong raw points; support if causal dynamic mutual correspondence source predicts GT semantic class. Report full16, mapped10, background6, GT-dynamic subset (box speed>=0.5m/s), and instance support>=half wrong points.",
+    "track_window_to_det": "Seven trackable classes; a same-class pre-update historical box within 2m is support. Report first-visible/cold-start instances and unavailable histories separately.",
+    "track_window_to_seg": "Correct-class2m matched fresh historical boxes containing wrong points; all and dynamic subsets.",
+    "bootstrap": "2000 scene resamples, seed20261030; separate class/distance/point-count views"
+  },
+  "flow_metrics": {
+    "annotation_type": "nuScenes has no directly measured dense scene-flow GT. Offline box-velocity-derived reference from official annotations, with explicit finite-velocity and range masks; report EPE/static/dynamic, strict/relaxed accuracy and outlier rate; never call this measured dense GT.",
+    "reference": "Official box velocities in world coordinates; source keyframe points in expanded boxes (factor1.1), require >5 points; object displacement transformed into target coordinates plus ego motion. Also report author-compatible source-axis velocity convention separately. Unknown-velocity box points excluded.",
+    "native_protocol": "Report actual pair coverage, source/target times, unique frames, range and ground filtering; no fabricated score for unavailable pairs."
+  },
+  "branches": {
+    "detection": [
+      "flow_to_det",
+      "track_window_to_det",
+      "temporal_to_det",
+      "temporal_fixed_to_det"
+    ],
+    "segmentation": [
+      "flow_to_seg",
+      "track_window_to_seg",
+      "ego_temporal_to_seg"
+    ]
+  },
+  "comparison": "Retain v1 track_to_det as Extended-History (~19.951s); compare window MCTrack and fixed temporal control with identical raw context; independently compare Flow directions. No joint best-of. E1 ratios are evidence, E2 is executable local Oracle feasibility, not learned Agent performance.",
+  "validation": "Full first alphabetical val scene before scaling; native strict model load; geometry/temporal lineage and no-op tests; official full-val detection and16-class segmentation evaluators; no metric-driven tuning.",
+  "out_of_scope": [
+    "Qwen",
+    "CTGEI",
+    "Agentic RL",
+    "new model training",
+    "Waymo download"
+  ]
+}

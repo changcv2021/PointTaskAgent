@@ -1,0 +1,11 @@
+# Core Python dependencies. Install a compatible torch/PyTorch3D pair separately.
+# See validation/runtime.json for the environment used for the recorded-code replay.
+numpy<2
+scipy
+Pillow
+matplotlib
+scikit-learn
+pyquaternion
+requests
+nuscenes-devkit
+# System dependency: bubblewrap (bwrap), with user namespaces available.

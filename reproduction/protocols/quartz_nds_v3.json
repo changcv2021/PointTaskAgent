@@ -1,0 +1,98 @@
+{
+  "protocol_id": "pointtaskagent-nds-attribute-audit-v3",
+  "created_utc": "2026-10-31T00:51:13.670088+00:00",
+  "frames": 6019,
+  "scenes": 150,
+  "source_protocols": {
+    "${PROJECT_ROOT}/evaluation/quartz_v1/protocol.json": "080c45bf19d39fe67d3760eccaf2af5e1e83deeab23259782961f1194f0bc9f7",
+    "${PROJECT_ROOT}/evaluation/quartz_flow_v2/protocol.json": "61314c15fb2ccfabadf3deec40fba763103582272c17fa0337739d6b3bd76288"
+  },
+  "historical_metric_paths": {
+    "original_baseline": "${PROJECT_ROOT}/evaluation/quartz_v1/results/metrics/baseline/detection/verified_metrics.json",
+    "strict_baseline": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/results/metrics/strict_baseline/detection/verified_metrics.json",
+    "track_window": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/results/metrics/track_window_to_det/detection/verified_metrics.json",
+    "temporal_oracle": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/results/metrics/temporal_to_det/detection/verified_metrics.json",
+    "temporal_fixed": "${PROJECT_ROOT}/evaluation/quartz_flow_v2/results/metrics/temporal_fixed_to_det/detection/verified_metrics.json",
+    "extended_history": "${PROJECT_ROOT}/evaluation/quartz_v1/results/metrics/track_to_det/detection/verified_metrics.json",
+    "seg_original": "${PROJECT_ROOT}/evaluation/quartz_v1/results/metrics/seg_to_det/detection/verified_metrics.json"
+  },
+  "historical_metric_sha256": {
+    "original_baseline": "097a32944ada9a2352634c92156405070e5da97f8eca05c49cc70d8db6f221b2",
+    "strict_baseline": "cbdcbd258f5088ad8e843570114ec033008095335025758af9f66ad9818fc56c",
+    "track_window": "660ab37d0921edffb051fd5c2c8d3b6d697a1b0f9e98a50a745a4cdc58b3e56b",
+    "temporal_oracle": "64f5497ae98cd4fb0f3661417306e7d30d3abbaf8b36ba4c8d0ad245789670f9",
+    "temporal_fixed": "20362ea7836195aee1fa6174e39e2139fa3c9b63e3ad535abeffe4f30777b781",
+    "extended_history": "9ebef36b1e8c1d1ccdc6d9b04f12701411965567b0a650fae1729f6b38468a5d",
+    "seg_original": "d5772ff19c1285092f0337d55c88b768286a4556b9f89df25d4ad661f241915e"
+  },
+  "history": "Unchanged v2 strict 500000us / <=10 historical sweeps; all new comparisons use strict baseline; v1 results retained as historical only",
+  "models": "No new inference, weights unchanged; reuse frozen predictions and candidate geometry",
+  "directions": [
+    "track",
+    "seg"
+  ],
+  "variants": {
+    "full": {
+      "operations": "both",
+      "replace_fields": "all"
+    },
+    "replace_full": {
+      "operations": "replace",
+      "replace_fields": "all"
+    },
+    "replace_center": {
+      "operations": "replace",
+      "replace_fields": [
+        "translation"
+      ]
+    },
+    "replace_center_size": {
+      "operations": "replace",
+      "replace_fields": [
+        "translation",
+        "size"
+      ]
+    },
+    "replace_center_yaw": {
+      "operations": "replace",
+      "replace_fields": [
+        "translation",
+        "rotation"
+      ]
+    },
+    "add_only": {
+      "operations": "append",
+      "replace_fields": "all"
+    },
+    "full_keep_velocity": {
+      "operations": "both",
+      "preserve_fields": [
+        "velocity"
+      ]
+    },
+    "full_keep_velocity_yaw_attribute": {
+      "operations": "both",
+      "preserve_fields": [
+        "velocity",
+        "rotation",
+        "attribute_name"
+      ]
+    }
+  },
+  "seg_strict_rebase": "Same frozen semantic-cluster geometry. Reassociate to strict detector using unchanged2m same-class gate; reset proposal score to0.5*cluster confidence and zero velocity/default attribute before inheriting matched strict detector score/velocity/attribute. Exact reconstruction against v1 checked on all unchanged frames.",
+  "oracle": "Unchanged fixed-order greedy lexicographic(sumTP-FP at0.5/1/2/4m, negative matched xy distance); one replacement per original index; no-op ties. Attribute projections keep center/class/score so decisions reused only after invariant checks. Add-only and replacement-only independently reselected.",
+  "candidate_gt_separation": "GT-free pool generation before private GT loading; serialized pool+projection table and script hashes define all variants; no GT box fitting or candidate parameter tuning",
+  "paired_error_analysis": "Anchor accepted replacement to baseline same-class score-greedy2m GT match; compare both boxes against that same GT, even if post box crosses2m. Report stable-pair, lost-pair, gained-pair, changed-GT cohorts separately. Use official raw finite velocities, never privateGT nan-to-zero for velocity diagnostics. Simple per-box statistics are not official recall-weighted TP errors.",
+  "operation_stats": "Count variants by append/replace and accepted events; physical yaw differences modulo2pi; numeric fields tolerance1e-6; new box fields are initialization, not overwritten detector attributes; no GT confidence target",
+  "tp_fp_analysis": "Actual unthresholded submitted boxes after unchanged official range/bike-rack filtering at0.5/1/2/4m; report full and independent append-only/replace-only interventions. Global official AP separately evaluated; no additive AP attribution claim.",
+  "evaluator": "Unmodified installed nuScenes detection_cvpr_2019 evaluator; sparse overlays reconstructed before official filtering; full Tracking result must reproduce frozen v2 metrics",
+  "out_of_scope": [
+    "model inference",
+    "Qwen",
+    "CTGEI",
+    "RL",
+    "training",
+    "new model",
+    "history expansion"
+  ]
+}

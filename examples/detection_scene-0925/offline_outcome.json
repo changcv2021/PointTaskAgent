@@ -1,0 +1,57 @@
+{
+  "index": 84,
+  "scene": "scene-0925",
+  "sample_token": "667256047cdc473caff95901be551788",
+  "task": "detection",
+  "episode": "D-1",
+  "status": "COMPLETE",
+  "selected": "SEG_TO_DET:5",
+  "code_attempts": 3,
+  "model_calls": 4,
+  "summary": "Select the existing small SEG center shift. The symmetric E3 ground-fit comparison places its bottom 2–5 cm above locally supported ground, rather than KEEP's 9–12 cm gap. E1 shows it recovers low returns 10735 and 10767 without clipping the observed upper or lateral support; E2 places those low returns above ground and near the upright structure. TRACK_TO_DET:6 loses lateral return 11283; TRACK_TO_DET:7 clips upper returns 11000/11032 and places its bottom below the fitted ground. Geometry and S0 are reused generator evidence, not independent votes or certified holdouts. Foot identity, hidden extent, and exact horizontal center remain uncertain; the choice rests on ground compatibility and preserved observed boundaries, not point count or centroid alignment.",
+  "episode_dir": "${EXPERIMENT_ROOT}/episodes/667256047cdc473caff95901be551788/D-1",
+  "gt_used_only_offline": true,
+  "baseline_objective": [
+    -382,
+    -7.091091463145514
+  ],
+  "selected_objective": [
+    -382,
+    -6.865105095820507
+  ],
+  "objective_definition": "Lexicographic: sum over 0.5/1/2/4m of 2*TP-Npred, then negative summed matched XY distance. Not AP/NDS.",
+  "delta_primary": 0,
+  "matched_xy_error_reduction_m": 0.22598636732500754,
+  "effect": "beneficial",
+  "oracle_qualified": true,
+  "qualified_actions": [
+    "SEG_TO_DET:5"
+  ],
+  "candidate_objectives": {
+    "KEEP": [
+      -382,
+      -7.091091463145514
+    ],
+    "TRACK_TO_DET:6": [
+      -382,
+      -7.425452269997669
+    ],
+    "TRACK_TO_DET:7": [
+      -382,
+      -7.544520061704511
+    ],
+    "SEG_TO_DET:5": [
+      -382,
+      -6.865105095820507
+    ]
+  },
+  "code_or_format_errors": 0,
+  "successful_code_steps": 2,
+  "diagnostic_questions": [
+    "Do the tracking shifts recover upright pedestrian returns, or instead clip their upper extent and lower the box beneath observable local ground?",
+    "Are the returns recovered below KEEP coherent foot-level support, and are the lateral returns lost by tracking part of the same upright structure?",
+    "The executed comparisons support the small SEG shift over KEEP and the stronger tracking shifts."
+  ],
+  "model_requested_views": 3,
+  "finalization": "PYTHON_RETURN_DECISION"
+}

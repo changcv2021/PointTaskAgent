@@ -1,0 +1,7 @@
+This is an independent Segmentation session, always reading initial D0/S0/T0. KEEP preserves S0. Each existing alternative is a region-level executable patch; scene.patch(cid) and scene.labels_for(point_ids,cid) expose its exact effect. KEEP has no patch object: use scene.labels_for(...,'KEEP').
+
+Identify the actual semantic disagreement on the points changed by the alternatives. Author a shared diagnostic on common support, comparing KEEP and the relevant existing label previews. Choose geometric/semantic/context tests that could discriminate this particular ambiguity, rather than restating the probability boost or box-containment rule that generated the proposal. Program-selected boundary or neighboring points can be inspected and highlighted with original point IDs.
+
+A detection/track box does not label every enclosed point. Ground, nearby objects and background may coexist inside it. LitePT-S is semantic rather than instance segmentation; neither a connected same-class cluster nor a region is a confirmed object instance. A temporal source box is unconfirmed association evidence. S0 probabilities and geometry were already involved in candidate generation; explain what genuinely new question a test answers.
+
+Select one existing whole patch or KEEP, never GT-derived or newly constructed per-point labels. Other regions are composed later by the unchanged deterministic overlap rule; D1/S1 never feeds this session.

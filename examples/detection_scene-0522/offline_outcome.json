@@ -1,0 +1,59 @@
+{
+  "index": 20,
+  "scene": "scene-0522",
+  "sample_token": "c78ad98d8c75474f8e796d485114d3e0",
+  "task": "detection",
+  "episode": "D-13",
+  "status": "COMPLETE",
+  "selected": "TRACK_TO_DET:14",
+  "code_attempts": 5,
+  "model_calls": 6,
+  "summary": "Choose the small correction: shared-point boundary tests preserve the observed end, side, and high-body patches, while lowering the bottom toward a coherent low truck-labelled row that KEEP partly cuts above. Actual pavement returns within the footprint remain 0.11–0.13 m below the corrected bottom. SEG contradicts the full observed end patch and high returns; TRACK_TO_DET:15 worsens end alignment and loses high body points. Low-row ownership remains uncertain because nearby pavement is spatially separated and S0 is not instance ground truth. Geometry and semantics are reused sources, not independent validation; no temporal-prior agreement or centroid/enclosure score was used.",
+  "episode_dir": "${EXPERIMENT_ROOT}/episodes/c78ad98d8c75474f8e796d485114d3e0/D-13",
+  "gt_used_only_offline": true,
+  "baseline_objective": [
+    -180,
+    -29.221860085882508
+  ],
+  "selected_objective": [
+    -180,
+    -28.765169180892933
+  ],
+  "objective_definition": "Lexicographic: sum over 0.5/1/2/4m of 2*TP-Npred, then negative summed matched XY distance. Not AP/NDS.",
+  "delta_primary": 0,
+  "matched_xy_error_reduction_m": 0.4566909049895749,
+  "effect": "beneficial",
+  "oracle_qualified": true,
+  "qualified_actions": [
+    "TRACK_TO_DET:14"
+  ],
+  "candidate_objectives": {
+    "KEEP": [
+      -180,
+      -29.221860085882508
+    ],
+    "TRACK_TO_DET:14": [
+      -180,
+      -28.765169180892933
+    ],
+    "TRACK_TO_DET:15": [
+      -182,
+      -30.186378534693414
+    ],
+    "SEG_TO_DET:11": [
+      -184,
+      -31.77302612890755
+    ]
+  },
+  "code_or_format_errors": 0,
+  "successful_code_steps": 4,
+  "diagnostic_questions": [
+    "Is the large SEG displacement supported by distinct truck-body boundaries, or does it follow only a partially visible patch?",
+    "Do the observed sensor-facing end and side patches, high body returns, and nearby road constrain the proposed longitudinal, lateral, and vertical shifts?",
+    "Can actual low-body and pavement returns distinguish TRACK_TO_DET:14’s small lowering from KEEP, without treating closer face margins as proof of a better center?",
+    "Are the low returns gained by TRACK_TO_DET:14 elevated truck structure, or pavement-like points whose inclusion would not justify lowering the box?",
+    "The executed boundary tests support TRACK_TO_DET:14’s small correction over KEEP; the larger shifts conflict with observed body surfaces."
+  ],
+  "model_requested_views": 8,
+  "finalization": "PYTHON_RETURN_DECISION"
+}

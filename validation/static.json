@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "python_files_parsed": 71,
+  "errors": [],
+  "examples": 100,
+  "paid_calls": 0,
+  "scope": "Static checks only; see separate runtime validation receipt."
+}

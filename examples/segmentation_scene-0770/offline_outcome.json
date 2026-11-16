@@ -1,0 +1,59 @@
+{
+  "index": 39,
+  "scene": "scene-0770",
+  "sample_token": "b380e87cf0df4f129ec3f6892ba7f6be",
+  "task": "segmentation",
+  "episode": "TRACK_TO_SEG-0",
+  "status": "COMPLETE",
+  "selected": "TRACK_TO_SEG:0",
+  "code_attempts": 4,
+  "model_calls": 5,
+  "summary": "Both patches identically relabel point 13105 from driveable_surface to car. The shared angular-range comparison E3 supports replacement: the target is 0.154 m short of the fitted road intersection and continues into nearby car-labeled returns 0.279–0.366 m short, while flanking road returns differ by at most about 0.022 m. E2 shows a stable 3.1 cm elevation above the road, consistent with a low grazing edge but also a limitation; S0 favors road and the images do not independently establish ownership. This new range-profile measurement supports car more than planar road continuity. Reused S0/LiDAR, the proposal box and unconfirmed T0 association alone were insufficient. Choose TRACK_TO_SEG:0; TRACK_TO_SEG:1 has the same executable label effect.",
+  "episode_dir": "${EXPERIMENT_ROOT}/episodes/b380e87cf0df4f129ec3f6892ba7f6be/TRACK_TO_SEG-0",
+  "gt_used_only_offline": true,
+  "repaired_points": 1,
+  "harmed_points": 0,
+  "net_correct_points": 1,
+  "changed_points": 1,
+  "baseline_mIoU_percent": 77.1201953167788,
+  "selected_mIoU_percent": 77.13623289672317,
+  "delta_mIoU_pp": 0.016037579944367053,
+  "baseline_mAcc_percent": 81.44918710500365,
+  "selected_mAcc_percent": 81.4640680573846,
+  "delta_mAcc_pp": 0.014880952380948997,
+  "all_candidate_effects": {
+    "TRACK_TO_SEG:0": {
+      "repaired_points": 1,
+      "harmed_points": 0,
+      "net_correct_points": 1,
+      "changed_points": 1
+    },
+    "TRACK_TO_SEG:1": {
+      "repaired_points": 1,
+      "harmed_points": 0,
+      "net_correct_points": 1,
+      "changed_points": 1
+    }
+  },
+  "effect": "beneficial",
+  "oracle_qualified": true,
+  "qualified_actions": [
+    "TRACK_TO_SEG:0",
+    "TRACK_TO_SEG:1"
+  ],
+  "candidate_objectives": {
+    "KEEP": 0,
+    "TRACK_TO_SEG:0": 1,
+    "TRACK_TO_SEG:1": 1
+  },
+  "code_or_format_errors": 0,
+  "successful_code_steps": 3,
+  "diagnostic_questions": [
+    "What exact semantic change do the patches make, and which competing surfaces surround the changed point?",
+    "Is point `13105` part of the road plane, or an elevated continuation of the car’s lower surface?",
+    "Does the target’s low-elevation LiDAR return continue the road range profile or the car’s lower edge?",
+    "The executed surface and angular-range comparisons support relabeling point `13105` as car rather than preserving its road label."
+  ],
+  "model_requested_views": 3,
+  "finalization": "PYTHON_RETURN_DECISION"
+}

@@ -1,0 +1,24 @@
+{
+  "examples": 100,
+  "scenes": 100,
+  "statuses": {
+    "COMPLETE": 100
+  },
+  "code_attempts_histogram": {
+    "3": 44,
+    "4": 41,
+    "5": 12,
+    "2": 3
+  },
+  "models": [
+    "gpt-6.1-sol"
+  ],
+  "gt_used": false,
+  "api_request_statuses": {
+    "ACCOUNTED": 464
+  },
+  "accounted_usd": 63.710034,
+  "committed_usd": 63.710034,
+  "budget_usd": 200,
+  "api_stop": false
+}

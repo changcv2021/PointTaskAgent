@@ -1,0 +1,51 @@
+[
+  {
+    "task": "segmentation",
+    "scene": "scene-0017",
+    "sample_token": "3425c66163af46cca4c96006d425e0eb",
+    "episode": "DET_TO_SEG-55",
+    "selected": "DET_TO_SEG:0"
+  },
+  {
+    "task": "detection",
+    "scene": "scene-0522",
+    "sample_token": "c78ad98d8c75474f8e796d485114d3e0",
+    "episode": "D-13",
+    "selected": "TRACK_TO_DET:14"
+  },
+  {
+    "task": "segmentation",
+    "scene": "scene-0770",
+    "sample_token": "b380e87cf0df4f129ec3f6892ba7f6be",
+    "episode": "TRACK_TO_SEG-0",
+    "selected": "TRACK_TO_SEG:0"
+  },
+  {
+    "task": "segmentation",
+    "scene": "scene-0963",
+    "sample_token": "2cafae36d20443a8910bfd8999f40998",
+    "episode": "DET_TO_SEG-18",
+    "selected": "DET_TO_SEG:0"
+  },
+  {
+    "task": "detection",
+    "scene": "scene-0906",
+    "sample_token": "fe2427d40c2741a5a41207cd031c27ba",
+    "episode": "D-9",
+    "selected": "TRACK_TO_DET:15"
+  },
+  {
+    "task": "segmentation",
+    "scene": "scene-0967",
+    "sample_token": "817e7e533a424c6f8c8140050c971f68",
+    "episode": "TRACK_TO_SEG-3",
+    "selected": "TRACK_TO_SEG:0"
+  },
+  {
+    "task": "detection",
+    "scene": "scene-0925",
+    "sample_token": "667256047cdc473caff95901be551788",
+    "episode": "D-1",
+    "selected": "SEG_TO_DET:5"
+  }
+]

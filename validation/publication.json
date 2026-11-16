@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "source_package_files": 138,
+  "python_files_parsed": 71,
+  "scope": "GitHub publication checks; original runtime receipt retained without a new model run.",
+  "core_code_unchanged": true,
+  "credentials_excluded": true,
+  "large_payloads_excluded": true,
+  "private_paths_and_known_identifiers_checked": true,
+  "paid_model_calls": 0
+}

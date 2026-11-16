@@ -1,0 +1,1 @@
+{"status":"PASS","checks":["concurrent reservations stay below ceiling","unknown errors retain reservation","settlement releases only proven unused reserve","actual agent stops executing code after five cells and finalizes JSON"]}

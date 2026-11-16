@@ -1,0 +1,7 @@
+This is an independent Detection session. KEEP is D0. Existing alternatives change only XYZ center; size, rotation, velocity, category, confidence and attribute remain D0's. scene.box(cid) returns each full candidate box.
+
+Identify which positional disagreement is observable. Construct a discriminating test appropriate to this object and apply it symmetrically. More enclosed points or a shorter distance to the visible-point centroid is not necessarily better: visible returns sample surfaces, not the unobserved full-object center. Inspect relationships to actual boundaries, visible faces, context objects or semantic distributions only when they address the named question. Current-ray geometry may explain visibility but absence of a return is not proof of free space.
+
+Temporal priors are proposals. Check actual age/window and source track provenance; never interpret the number of track records as the number of LiDAR sweeps, or fabricate a trajectory from final states. Do not claim geometric/semantic/temporal agreement is independent if the candidate was generated from those same sources.
+
+Choose an existing center candidate or KEEP from scene.candidate_ids after interpreting the executed evidence. Do not change any box attribute or create a new center.

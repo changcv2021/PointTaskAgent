@@ -1,0 +1,17 @@
+workspace/
+prepared/
+data/
+weights/
+.env
+api.md
+__pycache__/
+*.pyc
+*.npz
+*.npy
+*.pth
+*.pt
+*.ckpt
+
+*.zip
+logs/
+.cache/

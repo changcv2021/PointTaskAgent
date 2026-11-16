@@ -1,0 +1,59 @@
+{
+  "index": 51,
+  "scene": "scene-0963",
+  "sample_token": "2cafae36d20443a8910bfd8999f40998",
+  "task": "segmentation",
+  "episode": "DET_TO_SEG-18",
+  "status": "COMPLETE",
+  "selected": "DET_TO_SEG:0",
+  "code_attempts": 4,
+  "model_calls": 5,
+  "summary": "Both alternatives identically relabel point 34448 from manmade to traffic_cone. The shared geometry diagnostic places it 0.119 m above a well-supported local surface (38 returns; median/p90 residuals 0.006/0.019 m), with similar elevation at 1.2 m radius. Nearby level returns and three returns about 0.22 m above support membership in the compact elevated cone-like structure seen in V2/V3. This is a new statistic on reused LiDAR, not independent validation; S0's near tie and detector containment alone do not justify correction. Nearby raised terrain, worsening wider fits, and sparse shape leave uncertainty about other manmade objects. DET_TO_SEG:0 represents the identical patches without claiming superiority from its probability boost.",
+  "episode_dir": "${EXPERIMENT_ROOT}/episodes/2cafae36d20443a8910bfd8999f40998/DET_TO_SEG-18",
+  "gt_used_only_offline": true,
+  "repaired_points": 1,
+  "harmed_points": 0,
+  "net_correct_points": 1,
+  "changed_points": 1,
+  "baseline_mIoU_percent": 63.130848895261316,
+  "selected_mIoU_percent": 63.7254535027728,
+  "delta_mIoU_pp": 0.594604607511485,
+  "baseline_mAcc_percent": 69.48611371736396,
+  "selected_mAcc_percent": 70.07782969369532,
+  "delta_mAcc_pp": 0.5917159763313578,
+  "all_candidate_effects": {
+    "DET_TO_SEG:0": {
+      "repaired_points": 1,
+      "harmed_points": 0,
+      "net_correct_points": 1,
+      "changed_points": 1
+    },
+    "DET_TO_SEG:1": {
+      "repaired_points": 1,
+      "harmed_points": 0,
+      "net_correct_points": 1,
+      "changed_points": 1
+    }
+  },
+  "effect": "beneficial",
+  "oracle_qualified": true,
+  "qualified_actions": [
+    "DET_TO_SEG:0",
+    "DET_TO_SEG:1"
+  ],
+  "candidate_objectives": {
+    "KEEP": 0,
+    "DET_TO_SEG:0": 1,
+    "DET_TO_SEG:1": 1
+  },
+  "code_or_format_errors": 1,
+  "successful_code_steps": 2,
+  "diagnostic_questions": [
+    null,
+    "Do the alternatives change the same point, and does its real neighborhood suggest an elevated cone return or continuation of the ground?",
+    "Is point `34448` measurably above the surrounding surface and part of compact vertically stacked returns, rather than ordinary ground or a separate manmade surface?",
+    "Does the accumulated evidence support relabeling point `34448` as traffic cone? Yes, with sparse-surface uncertainty."
+  ],
+  "model_requested_views": 2,
+  "finalization": "PYTHON_RETURN_DECISION"
+}
