@@ -22,7 +22,7 @@
   {
     "path": "SOURCE_MANIFEST.json",
     "bytes": 27800,
-    "sha256": "842d9a3969588165199ffcbcd2fba92cb0e0dbe4b183c8fd18d232c98521625e"
+    "sha256": "98a6f088c40c4f3837a77d572a788be4111f8215c84d162a92cf19acdc316d05"
   },
   {
     "path": "configs/class_mappings.json",
@@ -586,8 +586,8 @@
   },
   {
     "path": "scripts/verify_package.py",
-    "bytes": 1764,
-    "sha256": "41f92f704699c5866d90b8bbf380c20eb048e6411484882fd96168e35b3bf764"
+    "bytes": 2259,
+    "sha256": "779b92103531e4c1f2cdb86aa6a9ab3f11df19d16d86710e49b8c01fdc83dda9"
   },
   {
     "path": "src/agent.py",

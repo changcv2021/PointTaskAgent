@@ -1,7 +1,13 @@
 """Static package checks. Does not import experiment entry points or call APIs."""
-import ast,json,re,sys,hashlib
+import ast,json,os,re,sys,hashlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
+azure_resource_host = re.compile(
+    r"\b[a-z0-9][a-z0-9-]*\.(?:services\.ai|openai|cognitiveservices)\.azure\.com\b",
+    re.IGNORECASE,
+)
+# A reviewer can run the checks as-is. A publisher may also supply a bare resource name.
+private_resource_name = os.environ.get("AZURE_RESOURCE_NAME", "").strip().casefold()
 errors=[];count=0
 for p in ROOT.rglob('*'):
     if not p.is_file():continue
@@ -15,7 +21,9 @@ for p in ROOT.rglob('*'):
         except SyntaxError as e:errors.append(str(rel)+': '+str(e))
     if p.suffix in ['.py','.json','.txt','.md','.toml','.yaml','.yml','.sh']:
         t=p.read_text()
-        if re.search('IU-BL-CS-'+'IVSLab-AIServices',t,re.I):errors.append(str(rel)+': private API endpoint')
+        endpoint_text = re.sub(r"""['"]\s*\+\s*['"]""", "", t) if p.suffix == ".py" else t
+        if azure_resource_host.search(endpoint_text) or (private_resource_name and private_resource_name in endpoint_text.casefold()):
+            errors.append(str(rel)+': private API endpoint')
         if re.search(r'\bsk-[A-Za-z0-9_-]{20,}',t):errors.append(str(rel)+': possible API key')
         if rel.parts[0] in ['src','scripts','configs','tools'] and any('/'+'N/'+s+'/' in t for s in ['project','slate']):
             errors.append(str(rel)+': machine-specific path in active code/config')

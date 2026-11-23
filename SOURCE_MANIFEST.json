@@ -73,7 +73,7 @@
   },
   {
     "source": "${PROJECT_ROOT}/releases/coding_release_20261115_build/templates/verify_package.py",
-    "source_sha256": "41f92f704699c5866d90b8bbf380c20eb048e6411484882fd96168e35b3bf764",
+    "source_sha256": "779b92103531e4c1f2cdb86aa6a9ab3f11df19d16d86710e49b8c01fdc83dda9",
     "packaged": "scripts/verify_package.py",
     "transformation": "unchanged"
   },
